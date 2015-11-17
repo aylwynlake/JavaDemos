@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location">
+      <!-- 标准配置 -->
+      <value>classpath:application.properties</value>
+    </property>
+  </bean>
+  
+  <!-- Configurer测试 -->
+  <bean id="projectName" class="java.lang.String">
+    <constructor-arg value="${project.name}"/>
+  </bean>
+  
+  <util:properties id="databaseConfig" location="classpath*:database-settings.properties"/>
+  
+  <bean
+    class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+    <!-- Next value is the full qualified name of the static setter including 
+      method name -->
+    <property name="staticMethod" value="pers.ly.demos.springframework.xmlconf.Utils.setDatabaseConfig" />
+    <property name="arguments">
+      <list>
+        <!-- This is the bean name that holds database-settings.properties -->
+        <ref bean="databaseConfig" />
+      </list>
+    </property>
+  </bean>
+</beans>
