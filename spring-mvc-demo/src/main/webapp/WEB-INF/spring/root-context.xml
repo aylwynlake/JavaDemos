@@ -4,5 +4,33 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="service" class="pers.ly.demos.service.DynamicInjectService">
+		<constructor-arg>
+			<ref bean="serviceFactory" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="businessService" class="pers.ly.demos.service.BusinessService" scope="prototype" />
+
+	<bean id="databaseService" class="pers.ly.demos.service.DatabaseService" scope="prototype" />
+	<bean id="defaultService" class="pers.ly.demos.service.DefaultService" scope="prototype" />
+
+	<bean id="serviceFactory"
+		class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+		<property name="serviceLocatorInterface" value="pers.ly.demos.service.IServiceFactory"></property>
+		<property name="serviceMappings">
+			<props>
+				<prop key="Business">
+					businessService
+				</prop>
+				<prop key="Database">
+					databaseService
+				</prop>
+				<prop key="*">
+				    defaultService
+				</prop>
+			</props>
+		</property>
+	</bean>
 		
 </beans>

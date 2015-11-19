@@ -4,17 +4,21 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import pers.ly.demos.service.DynamicInjectService;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
-	
+	@Autowired
+	private DynamicInjectService diService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -29,7 +33,13 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
+		serve();
+		
 		return "home";
+	}
+	
+	private void serve() {
+		diService.serve("Database");
 	}
 	
 }
