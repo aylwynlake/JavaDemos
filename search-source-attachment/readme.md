@@ -1,15 +1,15 @@
-ÔÚÄ³¸ö¸½´øÔ´ÂëµÄjar°üÉÏÓÒ¼ü,Ñ¡ÔñÊôĞÔ(Properties),»òÕßÊ¹ÓÃ¿ì½İ¼üalt+enter
-ÔÚJava Source Attachment´°¿ÚÏÂ¸´ÖÆExternal locationµÄÂ·¾¶
+åœ¨æŸä¸ªé™„å¸¦æºç çš„jaråŒ…ä¸Šå³é”®,é€‰æ‹©å±æ€§(Properties),æˆ–è€…ä½¿ç”¨å¿«æ·é”®alt+enter
+åœ¨Java Source Attachmentçª—å£ä¸‹å¤åˆ¶External locationçš„è·¯å¾„
 
-»Øµ½search-source-attachmentÏîÄ¿ÖĞ,
-ÔÚsrcÄ¿Â¼ÏÂÓÒ¼üimport,ÔÚµ¯³öµÄ¶Ô»°¿òÖĞËÑË÷Archive File,ÏÂÒ»²½,½«¸Õ²Å¸´ÖÆµÄsource jarÂ·¾¶Õ³Ìùµ½µØÖ·À¸ÖĞ,»Ø³µ,
-µã»÷finish.
+å›åˆ°search-source-attachmenté¡¹ç›®ä¸­,
+åœ¨srcç›®å½•ä¸‹å³é”®import,åœ¨å¼¹å‡ºçš„å¯¹è¯æ¡†ä¸­æœç´¢Archive File,ä¸‹ä¸€æ­¥,å°†åˆšæ‰å¤åˆ¶çš„source jarè·¯å¾„ç²˜è´´åˆ°åœ°å€æ ä¸­,å›è½¦,
+ç‚¹å‡»finish.
 
-È»ºó¿ÉÒÔÊ¹ÓÃCtrl+HËÑË÷À²
+ç„¶åå¯ä»¥ä½¿ç”¨Ctrl+Hæœç´¢å•¦
 
-×¢Òâ:
-ÔÚÊ¹ÓÃĞÂ½¨javaÏîÄ¿Ïòµ¼Íê³Éºó, ĞèÒªÔÚsearch-source-attachmentÏîÄ¿µÄÊôĞÔÖĞµÄBuilders´°¿ÚÀï,¹´Ñ¡µôJava Builder
-·ÀÖ¹±¨´í
+æ³¨æ„:
+åœ¨ä½¿ç”¨æ–°å»ºjavaé¡¹ç›®å‘å¯¼å®Œæˆå, éœ€è¦åœ¨search-source-attachmenté¡¹ç›®çš„å±æ€§ä¸­çš„Buildersçª—å£é‡Œ,å‹¾é€‰æ‰Java Builder
+é˜²æ­¢æŠ¥é”™
 
-¸ù¾İ
+æ ¹æ®
 http://stackoverflow.com/questions/12088820/search-in-source-attachment-in-eclipse
