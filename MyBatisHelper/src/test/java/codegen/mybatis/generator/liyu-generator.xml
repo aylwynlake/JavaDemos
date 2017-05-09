@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry location="D:\repository\ojdbc\ojdbc\6\ojdbc-6.jar" />
+
+	<context id="oracle" defaultModelType="flat" targetRuntime="MyBatis3">
+		<!--实体类实现序列化-->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+		<commentGenerator>  
+            <property name="suppressDate" value="false"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->  
+            <property name="suppressAllComments" value="false"/>  
+        </commentGenerator>
+        
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@120.132.6.168:41522:ECOLOGY"
+			userId="prvs"
+			password="Prvs$1">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+        <!--生成Model类存放位置-->
+		<javaModelGenerator targetPackage="com.em.entity.chanchuwu" targetProject="src/main/generated">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+    
+        <!--生成映射文件存放位置-->
+		<sqlMapGenerator targetPackage="com.em.mapper.chanchuwu" targetProject="src/main/generated">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+        <!--生成Dao类存放位置-->
+        <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.em.mapper.chanchuwu" targetProject="src/main/generated">
+         <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator> -->
+      
+        <table schema="" tableName="chanchuwu_type" domainObjectName="ChanchuwuType"
+            enableCountByExample="true" enableUpdateByExample="true"
+            enableDeleteByExample="true" enableSelectByExample="true"
+            selectByExampleQueryId="true">
+            <columnOverride column="CREATE_TIME" property="createTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+            <columnOverride column="UPDATE_TIME" property="updateTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+        </table>
+        
+        <table schema="" tableName="chanchuwu_ops" domainObjectName="ChanchuwuOps"
+            enableCountByExample="true" enableUpdateByExample="true"
+            enableDeleteByExample="true" enableSelectByExample="true"
+            selectByExampleQueryId="true">
+            <columnOverride column="CREATE_TIME" property="createTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+            <columnOverride column="UPDATE_TIME" property="updateTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+        </table>
+        
+		<table schema="" tableName="chanchuwu_normal_permission" domainObjectName="ChanchuwuNormalPermission"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="true">
+            <columnOverride column="CREATE_TIME" property="createTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+            <columnOverride column="UPDATE_TIME" property="updateTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+		</table>
+    
+        <table schema="" tableName="chanchuwu_function_permission" domainObjectName="ChanchuwuFunctionPermission"
+            enableCountByExample="true" enableUpdateByExample="true"
+            enableDeleteByExample="true" enableSelectByExample="true"
+            selectByExampleQueryId="true">
+            <columnOverride column="CREATE_TIME" property="createTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+            <columnOverride column="UPDATE_TIME" property="updateTime" javaType="org.joda.time.DateTime" 
+              typeHandler="org.joda.time.mybatis.handlers.DateTimeTypeHandler" />
+        </table>
+
+	</context>
+</generatorConfiguration>
