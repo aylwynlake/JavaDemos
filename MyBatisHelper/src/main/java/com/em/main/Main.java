@@ -458,11 +458,11 @@ public class Main {
 					// + getMethodParamByColnames(pksList) + ") ;" +
 					// lineSeparator);
 
-					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "(" + beanName
+					out.write("\tpublic int deleteByPK" + "(" + beanName
 							+ " " + objectName + ") ;" + lineSeparator);
 
 				} else {
-					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic int deleteByPK("
 							+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 				}
 
@@ -473,8 +473,7 @@ public class Main {
 					// */
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
-					out.write("\tpublic int deleteBy"
-							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "("
+					out.write("\tpublic int deleteByPK("
 							+ otherMapping.getJavaType() + " " + otherMapping.getPropertyName() + ") ;"
 							+ lineSeparator);
 
@@ -513,11 +512,11 @@ public class Main {
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
 				if (pksList.size() > 1) {
-					out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic " + beanName + " queryByPK("
 							+ beanName + " " + objectName + ") ;" + lineSeparator);
 
 				} else {
-					out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic " + beanName + " queryByPK("
 							+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 				}
 
@@ -692,7 +691,7 @@ public class Main {
 					// */
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
-					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic int deleteByPK("
 							+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 				}
 
@@ -703,8 +702,7 @@ public class Main {
 					// */
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
-					out.write("\tpublic int deleteBy"
-							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "("
+					out.write("\tpublic int deleteByPK("
 							+ otherMapping.getJavaType() + " " + otherMapping.getPropertyName() + ") ;"
 							+ lineSeparator);
 				}
@@ -741,7 +739,7 @@ public class Main {
 				// */
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
-				out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
+				out.write("\tpublic " + beanName + " queryByPK("
 						+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 			}
 
@@ -1006,7 +1004,7 @@ public class Main {
 					// CoreException;
 
 					out.write("\t@Override" + lineSeparator);
-					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic int deleteByPK("
 							+ getMethodParamByColnames(pksList) + ")   {" + lineSeparator);
 
 					if (pksList.size() > 1) {
@@ -1014,8 +1012,7 @@ public class Main {
 
 						out.write(getBeanSetString(pksList));
 
-						out.write("\t\treturn " + resJaveDaoLower + ".deleteBy"
-								+ getMethodByColnames(pksList) + "(" + objectName + ");" + lineSeparator);
+						out.write("\t\treturn " + resJaveDaoLower + ".deleteByPK(" + objectName + ");" + lineSeparator);
 
 					} else {
 						// 单个字段查询条件
@@ -1029,8 +1026,7 @@ public class Main {
 						// + \"query"+beanName+"ListBy"+colNameAll+"\", "+
 						// mapping.getPropertyName()+"));"+lineSeparator);
 
-						out.write("\t\treturn " + resJaveDaoLower + ".deleteBy"
-								+ getMethodByColnames(pksList) + "(" + mapping.getPropertyName() + ");"
+						out.write("\t\treturn " + resJaveDaoLower + ".deleteByPK(" + mapping.getPropertyName() + ");"
 								+ lineSeparator);
 					}
 
@@ -1046,13 +1042,11 @@ public class Main {
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
 					out.write("\t@Override" + lineSeparator);
-					out.write("\tpublic int deleteBy"
-							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "("
+					out.write("\tpublic int deleteByPK("
 							+ otherMapping.getJavaType() + " " + otherMapping.getPropertyName() + ")   {"
 							+ lineSeparator);
 
-					out.write("\t\treturn " + resJaveDaoLower + ".deleteBy"
-							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "\", "
+					out.write("\t\treturn " + resJaveDaoLower + ".deleteByPK" + "\", "
 							+ otherMapping.getPropertyName() + ");" + lineSeparator);
 
 					out.write("\t}" + lineSeparator);
@@ -1133,7 +1127,7 @@ public class Main {
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
+				out.write("\tpublic " + beanName + " queryByPK("
 						+ getMethodParamByColnames(pksList) + ")   {" + lineSeparator);
 
 				if (pksList.size() > 1) {
@@ -1141,8 +1135,7 @@ public class Main {
 
 					out.write(getBeanSetString(pksList));
 
-					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".queryBy"
-							+ getMethodByColnames(pksList) + "(" + objectName + ");" + lineSeparator);
+					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".queryByPK(" + objectName + ");" + lineSeparator);
 				} else {
 					// 单个字段查询条件
 
@@ -1155,8 +1148,8 @@ public class Main {
 					// + \"query"+beanName+"ListBy"+colNameAll+"\", "+
 					// mapping.getPropertyName()+"));"+lineSeparator);
 
-					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".queryBy"
-							+ getMethodByColnames(pksList) + "(" + mapping.getPropertyName() + ");" + lineSeparator);
+					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".queryByPK(" 
+					+ mapping.getPropertyName() + ");" + lineSeparator);
 				}
 
 				// return (TbUser)getSqlMap().queryForObject(NAMESPACES +
@@ -1619,7 +1612,7 @@ public class Main {
 					// where ID = #{id,jdbcType=DECIMAL}
 					// </delete>
 
-					out.write("\t<delete id=\"deleteBy" + getMethodByColnames(pksList)
+					out.write("\t<delete id=\"deleteByPK"
 							+ "\" parameterType=\"" + javaBeanFullString + "\">" + lineSeparator);
 
 					out.write("\t\tdelete from " + getFullTabName() + lineSeparator);
@@ -1631,7 +1624,7 @@ public class Main {
 
 				} else {
 
-					out.write("\t<delete id=\"deleteBy" + getMethodByColnames(pksList)
+					out.write("\t<delete id=\"deleteByPK"
 							+ "\" parameterType=\"" + getJavaFullType(pksList) + "\">" + lineSeparator);
 
 					out.write("\t\tdelete from " + getFullTabName() + lineSeparator);
@@ -1648,8 +1641,7 @@ public class Main {
 					// * 删 delete
 					// */
 
-					out.write("\t<delete id=\"deleteBy"
-							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "\" parameterType=\""
+					out.write("\t<delete id=\"deleteByPK" + "\" parameterType=\""
 							+ JdbcUtil.convertJdbcType2JavaTypeFull(otherMapping.getColumnType()) + "\">"
 							+ lineSeparator);
 
@@ -1767,7 +1759,7 @@ public class Main {
 				// </select>
 				if (pksList.size() > 1) {
 
-					out.write("\t<select id=\"queryBy" + getMethodByColnames(pksList)
+					out.write("\t<select id=\"queryByPK"
 							+ "\" parameterType=\"" + javaBeanFullString + "\" resultMap=\"" + resultMapId + "\">"
 							+ lineSeparator);
 
@@ -1780,7 +1772,7 @@ public class Main {
 					out.write(lineSeparator);
 
 				} else {
-					out.write("\t<select id=\"queryBy" + getMethodByColnames(pksList)
+					out.write("\t<select id=\"queryByPK"
 							+ "\" parameterType=\"" + getJavaFullType(pksList) + "\" resultMap=\"" + resultMapId + "\">"
 							+ lineSeparator);
 
