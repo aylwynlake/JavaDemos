@@ -26,15 +26,50 @@ public class Main {
 	static String lineSeparator = (String) java.security.AccessController
 			.doPrivileged(new sun.security.action.GetPropertyAction("line.separator"));
 
+	// 配置项：输出目录
+        static String outputPath = "d:\\mybatishelper\\output";
+        // 配置项：生成文件的字符集
+        static String charSet = "UTF-8";
+
+        /*
+         * 配置项：数据库连接配置
+         */
+
+        /*
+         * oracle JDBC 链接
+         */
+        static String driver = "oracle.jdbc.driver.OracleDriver";
+        static String url = "jdbc:oracle:thin:@172.31.217.104:1521/BDCFG";
+        static String user = "wbank";
+        static String password = "Wbank0413";
+        
 	// 配置项：生成DAO java文件的包路径
 	// static String packageStr = "com.spdbccc.service.iface.dao";
-	static String packageStr = "com.em";
+	static String packageStr = "com.embd.text";
 
 	// 配置项：生成DAO java文件的包路径(EM后修改为相关业务分类)
-	static String packageStrPojoEx = "pojo.tag";
-	static String packageStrDaoEx = "dao.tag";
-	static String packageStrServiceEx = "service.tag";
-	static String packageStrServiceImplEx = "service.tag.impl";
+	static String packageStrPojoEx = "domain.words";
+	static String packageStrDaoEx = "mapper.words";
+	static String packageStrServiceEx = "service.words";
+	static String packageStrServiceImplEx = "service.words";
+	
+	// 配置项：查询语句
+        static String sql = "select * from WD_BANK_BASEINFO";
+
+        static String sqlCount = "select count(*) from WD_BANK_BASEINFO";
+        // 配置项：模式名，如果为空，则表名前将不带上模式名称
+        static String schemaName = "";
+        // 配置项：对应的实体对象名称
+        static String beanName = "WDBankBaseInfo";
+        // 配置项：表名
+        static String tabName = "WD_BANK_BASEINFO".toUpperCase();
+
+        // 配置项：主键字段名称
+        static String pkName = "EID".toUpperCase();
+        static String[] pks = pkName.split(",");
+
+        // 配置项：其他可以作为删除条件的主键，如果为空的话，则生成对应的删除语句
+        static String otherDeleteKey = "".toUpperCase();
 
 	// 配置项：DAO基类的完整类路径
 	// static String baseDaoFull = "com.spdbccc.opas.common.dao.AbstractDao";
@@ -62,23 +97,7 @@ public class Main {
 	// 配置项：是否需要生成列表更新方法
 	static boolean needListUpdate = true;
 
-	// 配置项：查询语句
-	static String sql = "select * from TAGGER_CONDITION_CONFIG";
-
-	static String sqlCount = "select count(*) from TAGGER_CONDITION_CONFIG";
-	// 配置项：模式名，如果为空，则表名前将不带上模式名称
-	static String schemaName = "";
-	// 配置项：对应的实体对象名称
-	static String beanName = "TagConditionConfig";
-	// 配置项：表名
-	static String tabName = "TAGGER_CONDITION_CONFIG".toUpperCase();
-
-	// 配置项：主键字段名称
-	static String pkName = "CC_ID".toUpperCase();
-	static String[] pks = pkName.split(",");
-
-	// 配置项：其他可以作为删除条件的主键，如果为空的话，则生成对应的删除语句
-	static String otherDeleteKey = "".toUpperCase();
+	
 
 	// 配置项：查询成列表的条件列表
 	static List<String> queryConditionsList = new ArrayList<String>();
@@ -87,22 +106,7 @@ public class Main {
 		// queryConditionsList.add("OWNER_NO,STATUS");
 	}
 
-	// 配置项：输出目录
-	static String outputPath = "d:\\mybatishelper\\output";
-	// 配置项：生成文件的字符集
-	static String charSet = "UTF-8";
-
-	/*
-	 * 配置项：数据库连接配置
-	 */
-
-	/*
-	 * oracle JDBC 链接
-	 */
-	static String driver = "oracle.jdbc.driver.OracleDriver";
-	static String url = "jdbc:oracle:thin:@172.16.57.168:1521:BDCFG";
-	static String user = "tagger";
-	static String password = "TAGGER";
+	
 
 	// static String driver = "com.mysql.jdbc.Driver";
 	// static String url = "jdbc:mysql://localhost:3306/localdb";
@@ -379,7 +383,7 @@ public class Main {
 
 		try {
 			out = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(outputPath + File.separator + beanName + "Dao.java"), charSet), 8 * 1024);
+					new FileOutputStream(outputPath + File.separator + beanName + "Mapper.java"), charSet), 8 * 1024);
 
 			// package com.huateng.dao;
 			out.write("package " + packageStr + "." + packageStrDaoEx + ";" + lineSeparator);
@@ -405,7 +409,7 @@ public class Main {
 			out.write(lineSeparator);
 			//
 			// public interface TbUserService {
-			out.write("public interface " + beanName + "Dao {" + lineSeparator);
+			out.write("public interface " + beanName + "Mapper {" + lineSeparator);
 			out.write(lineSeparator);
 
 			// 获取对象参数名称
@@ -418,8 +422,8 @@ public class Main {
 				// public int insertTbUser(TbUser tbUser) ;
 				// public int insertTbUserSelective(TbUser tbUser) throws
 				// CoreException;
-				out.write("\tpublic int insert" + beanName + "(" + beanName + " " + objectName + ");" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "Selective(" + beanName + " " + objectName + ") ;"
+				out.write("\tpublic int insert(" + beanName + " " + objectName + ");" + lineSeparator);
+				out.write("\tpublic int insertSelective(" + beanName + " " + objectName + ") ;"
 						+ lineSeparator);
 
 			}
@@ -430,8 +434,8 @@ public class Main {
 				// public int insertTestQueueListSelective(List<TestQueue> list)
 				// ;
 
-				out.write("\tpublic int insert" + beanName + "List(List<" + beanName + "> list) ;" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "ListSelective(List<" + beanName + "> list); "
+				out.write("\tpublic int insertList(List<" + beanName + "> list) ;" + lineSeparator);
+				out.write("\tpublic int insertListSelective(List<" + beanName + "> list); "
 						+ lineSeparator);
 
 			}
@@ -454,11 +458,11 @@ public class Main {
 					// + getMethodParamByColnames(pksList) + ") ;" +
 					// lineSeparator);
 
-					out.write("\tpublic int delete" + beanName + "By" + getMethodByColnames(pksList) + "(" + beanName
+					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "(" + beanName
 							+ " " + objectName + ") ;" + lineSeparator);
 
 				} else {
-					out.write("\tpublic int delete" + beanName + "By" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "("
 							+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 				}
 
@@ -469,7 +473,7 @@ public class Main {
 					// */
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
-					out.write("\tpublic int delete" + beanName + "By"
+					out.write("\tpublic int deleteBy"
 							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "("
 							+ otherMapping.getJavaType() + " " + otherMapping.getPropertyName() + ") ;"
 							+ lineSeparator);
@@ -484,8 +488,8 @@ public class Main {
 				// public int updateTbUser(TbUser tbUser) ;
 				// public int updateTbUserSelective(TbUser tbUser) throws
 				// CoreException;
-				out.write("\tpublic int update" + beanName + "(" + beanName + " " + objectName + ") ;" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "Selective(" + beanName + " " + objectName + ") ;"
+				out.write("\tpublic int update(" + beanName + " " + objectName + ") ;" + lineSeparator);
+				out.write("\tpublic int updateSelective(" + beanName + " " + objectName + ") ;"
 						+ lineSeparator);
 
 			}
@@ -497,8 +501,8 @@ public class Main {
 				// public int insertTestQueueListSelective(List<TestQueue> list)
 				// ;
 
-				out.write("\tpublic int update" + beanName + "List(List<" + beanName + "> list) ;" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "ListSelective(List<" + beanName + "> list) ;"
+				out.write("\tpublic int updateList(List<" + beanName + "> list) ;" + lineSeparator);
+				out.write("\tpublic int updateListSelective(List<" + beanName + "> list) ;"
 						+ lineSeparator);
 			}
 
@@ -509,11 +513,11 @@ public class Main {
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
 				if (pksList.size() > 1) {
-					out.write("\tpublic " + beanName + " query" + beanName + "By" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
 							+ beanName + " " + objectName + ") ;" + lineSeparator);
 
 				} else {
-					out.write("\tpublic " + beanName + " query" + beanName + "By" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
 							+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 				}
 
@@ -526,7 +530,7 @@ public class Main {
 				// */
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
-				out.write("\tpublic List<" + beanName + "> query" + beanName + "List() ;" + lineSeparator);
+				out.write("\tpublic List<" + beanName + "> queryList() ;" + lineSeparator);
 			}
 			if (needSelectCount) {
 
@@ -535,7 +539,7 @@ public class Main {
 				// */
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
-				out.write("\tpublic Long query" + beanName + "Count() ;" + lineSeparator);
+				out.write("\tpublic Long count() ;" + lineSeparator);
 			}
 
 			if (!queryConditionsList.isEmpty()) {
@@ -561,7 +565,7 @@ public class Main {
 
 					// System.out.println(StringUtil.toJson(colList));
 
-					String str = "\tpublic List<" + beanName + "> query" + beanName + "ListBy";
+					String str = "\tpublic List<" + beanName + "> queryListBy";
 
 					String colName = null;
 					for (int i = 0; i < colList.size(); i++) {
@@ -657,8 +661,8 @@ public class Main {
 				// public int insertTbUser(TbUser tbUser) ;
 				// public int insertTbUserSelective(TbUser tbUser) throws
 				// CoreException;
-				out.write("\tpublic int insert" + beanName + "(" + beanName + " " + objectName + ");" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "Selective(" + beanName + " " + objectName + ") ;"
+				out.write("\tpublic int insert(" + beanName + " " + objectName + ");" + lineSeparator);
+				out.write("\tpublic int insertSelective(" + beanName + " " + objectName + ") ;"
 						+ lineSeparator);
 
 			}
@@ -669,8 +673,8 @@ public class Main {
 				// public int insertTestQueueListSelective(List<TestQueue> list)
 				// ;
 
-				out.write("\tpublic int insert" + beanName + "List(List<" + beanName + "> list) ;" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "ListSelective(List<" + beanName + "> list); "
+				out.write("\tpublic int insertList(List<" + beanName + "> list) ;" + lineSeparator);
+				out.write("\tpublic int insertListSelective(List<" + beanName + "> list); "
 						+ lineSeparator);
 
 			}
@@ -688,7 +692,7 @@ public class Main {
 					// */
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
-					out.write("\tpublic int delete" + beanName + "By" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "("
 							+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 				}
 
@@ -699,7 +703,7 @@ public class Main {
 					// */
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
-					out.write("\tpublic int delete" + beanName + "By"
+					out.write("\tpublic int deleteBy"
 							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "("
 							+ otherMapping.getJavaType() + " " + otherMapping.getPropertyName() + ") ;"
 							+ lineSeparator);
@@ -713,8 +717,8 @@ public class Main {
 				// public int updateTbUser(TbUser tbUser) ;
 				// public int updateTbUserSelective(TbUser tbUser) throws
 				// CoreException;
-				out.write("\tpublic int update" + beanName + "(" + beanName + " " + objectName + ") ;" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "Selective(" + beanName + " " + objectName + ") ;"
+				out.write("\tpublic int update(" + beanName + " " + objectName + ") ;" + lineSeparator);
+				out.write("\tpublic int updateSelective(" + beanName + " " + objectName + ") ;"
 						+ lineSeparator);
 
 			}
@@ -726,8 +730,8 @@ public class Main {
 				// public int insertTestQueueListSelective(List<TestQueue> list)
 				// ;
 
-				out.write("\tpublic int update" + beanName + "List(List<" + beanName + "> list) ;" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "ListSelective(List<" + beanName + "> list) ;"
+				out.write("\tpublic int updateList(List<" + beanName + "> list) ;" + lineSeparator);
+				out.write("\tpublic int updateListSelective(List<" + beanName + "> list) ;"
 						+ lineSeparator);
 			}
 
@@ -737,7 +741,7 @@ public class Main {
 				// */
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
-				out.write("\tpublic " + beanName + " query" + beanName + "By" + getMethodByColnames(pksList) + "("
+				out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
 						+ getMethodParamByColnames(pksList) + ") ;" + lineSeparator);
 			}
 
@@ -748,11 +752,11 @@ public class Main {
 				// */
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
-				out.write("\tpublic List<" + beanName + "> query" + beanName + "List() ;" + lineSeparator);
+				out.write("\tpublic List<" + beanName + "> queryList() ;" + lineSeparator);
 			}
 
 			if (needSelectCount) {
-				out.write("\tpublic Long query" + beanName + "Count() ;" + lineSeparator);
+				out.write("\tpublic Long count() ;" + lineSeparator);
 			}
 
 			if (!queryConditionsList.isEmpty()) {
@@ -778,7 +782,7 @@ public class Main {
 
 					// System.out.println(StringUtil.toJson(colList));
 
-					String str = "\tpublic List<" + beanName + "> query" + beanName + "ListBy";
+					String str = "\tpublic List<" + beanName + "> queryListBy";
 
 					String colName = null;
 					for (int i = 0; i < colList.size(); i++) {
@@ -875,7 +879,7 @@ public class Main {
 
 			out.write("import org.springframework.stereotype.Service;" + lineSeparator);
 			// import com.em.dao.sys.UserInfoDao;
-			out.write("import " + packageStr + "." + packageStrDaoEx + "." + beanName + "Dao;" + lineSeparator);
+			out.write("import " + packageStr + "." + packageStrDaoEx + "." + beanName + "Mapper;" + lineSeparator);
 			// import com.em.pojo.sys.UserInfo;
 			out.write("import " + packageStr + "." + packageStrPojoEx + "." + beanName + ";" + lineSeparator);
 			// import com.em.service.sys.UserInfoService;
@@ -894,7 +898,7 @@ public class Main {
 					+ lineSeparator);
 			out.write(lineSeparator);
 
-			String resJavaDao = beanName + "Dao";
+			String resJavaDao = beanName + "Mapper";
 			String resJaveDaoLower = getFNmae(resJavaDao);
 
 			// @Resource
@@ -921,13 +925,13 @@ public class Main {
 				// CoreException;
 				out.write("\t@Override" + lineSeparator);
 				out.write(
-						"\tpublic int insert" + beanName + "(" + beanName + " " + objectName + ")  {" + lineSeparator);
+						"\tpublic int insert(" + beanName + " " + objectName + ")  {" + lineSeparator);
 
 				// return getSqlMap().insert(NAMESPACES +
 				// "insertSelective",tbUser);
 
 				// return roleResourceDao.deleteByPrimaryKey(key)
-				out.write("\t\treturn  " + resJaveDaoLower + ".insert" + beanName + "(" + objectName + ");"
+				out.write("\t\treturn  " + resJaveDaoLower + ".insert(" + objectName + ");"
 						+ lineSeparator);
 
 				// System.out.println("return " + resJaveDaoLower + ".insert" +
@@ -940,10 +944,10 @@ public class Main {
 				out.write(lineSeparator);
 
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "Selective(" + beanName + " " + objectName + ")  {"
+				out.write("\tpublic int insertSelective(" + beanName + " " + objectName + ")  {"
 						+ lineSeparator);
 
-				out.write("\t\treturn  " + resJaveDaoLower + ".insert" + beanName + "Selective(" + objectName + ");"
+				out.write("\t\treturn  " + resJaveDaoLower + ".insertSelective(" + objectName + ");"
 						+ lineSeparator);
 
 				out.write("\t}" + lineSeparator);
@@ -964,10 +968,10 @@ public class Main {
 				// }
 
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "List(List<" + beanName + "> list)  {" + lineSeparator);
+				out.write("\tpublic int insertList(List<" + beanName + "> list)  {" + lineSeparator);
 				out.write("\t\tint returnValue = 0;" + lineSeparator);
 				out.write("\t\tfor (" + beanName + " " + objectName + " : list) {" + lineSeparator);
-				out.write("\t\t\treturnValue+=insert" + beanName + "(" + objectName + ");" + lineSeparator);
+				out.write("\t\t\treturnValue+=insert(" + objectName + ");" + lineSeparator);
 				out.write("\t\t}" + lineSeparator);
 				out.write("\t\treturn returnValue;" + lineSeparator);
 				out.write("\t}" + lineSeparator);
@@ -975,11 +979,11 @@ public class Main {
 				out.write(lineSeparator);
 
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic int insert" + beanName + "ListSelective(List<" + beanName + "> list)   {"
+				out.write("\tpublic int insertListSelective(List<" + beanName + "> list)   {"
 						+ lineSeparator);
 				out.write("\t\tint returnValue = 0;" + lineSeparator);
 				out.write("\t\tfor (" + beanName + " " + objectName + " : list) {" + lineSeparator);
-				out.write("\t\t\treturnValue+=insert" + beanName + "Selective(" + objectName + ");" + lineSeparator);
+				out.write("\t\t\treturnValue+=insertSelective(" + objectName + ");" + lineSeparator);
 				out.write("\t\t}" + lineSeparator);
 				out.write("\t\treturn returnValue;" + lineSeparator);
 				out.write("\t}" + lineSeparator);
@@ -1002,7 +1006,7 @@ public class Main {
 					// CoreException;
 
 					out.write("\t@Override" + lineSeparator);
-					out.write("\tpublic int delete" + beanName + "By" + getMethodByColnames(pksList) + "("
+					out.write("\tpublic int deleteBy" + getMethodByColnames(pksList) + "("
 							+ getMethodParamByColnames(pksList) + ")   {" + lineSeparator);
 
 					if (pksList.size() > 1) {
@@ -1010,7 +1014,7 @@ public class Main {
 
 						out.write(getBeanSetString(pksList));
 
-						out.write("\t\treturn " + resJaveDaoLower + ".delete" + beanName + "By"
+						out.write("\t\treturn " + resJaveDaoLower + ".deleteBy"
 								+ getMethodByColnames(pksList) + "(" + objectName + ");" + lineSeparator);
 
 					} else {
@@ -1025,7 +1029,7 @@ public class Main {
 						// + \"query"+beanName+"ListBy"+colNameAll+"\", "+
 						// mapping.getPropertyName()+"));"+lineSeparator);
 
-						out.write("\t\treturn " + resJaveDaoLower + ".delete" + beanName + "By"
+						out.write("\t\treturn " + resJaveDaoLower + ".deleteBy"
 								+ getMethodByColnames(pksList) + "(" + mapping.getPropertyName() + ");"
 								+ lineSeparator);
 					}
@@ -1042,12 +1046,12 @@ public class Main {
 					// public int deleteTbUserById(Integer id) throws
 					// CoreException;
 					out.write("\t@Override" + lineSeparator);
-					out.write("\tpublic int delete" + beanName + "By"
+					out.write("\tpublic int deleteBy"
 							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "("
 							+ otherMapping.getJavaType() + " " + otherMapping.getPropertyName() + ")   {"
 							+ lineSeparator);
 
-					out.write("\t\treturn " + resJaveDaoLower + ".delete" + beanName + "By"
+					out.write("\t\treturn " + resJaveDaoLower + ".deleteBy"
 							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "\", "
 							+ otherMapping.getPropertyName() + ");" + lineSeparator);
 
@@ -1066,19 +1070,19 @@ public class Main {
 
 				out.write("\t@Override" + lineSeparator);
 				out.write(
-						"\tpublic int update" + beanName + "(" + beanName + " " + objectName + ")   {" + lineSeparator);
+						"\tpublic int update(" + beanName + " " + objectName + ")   {" + lineSeparator);
 
-				out.write("\t\treturn " + resJaveDaoLower + ".update" + beanName + "(" + objectName + ");"
+				out.write("\t\treturn " + resJaveDaoLower + ".update(" + objectName + ");"
 						+ lineSeparator);
 
 				out.write("\t}" + lineSeparator);
 				out.write(lineSeparator);
 
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "Selective(" + beanName + " " + objectName + ")   {"
+				out.write("\tpublic int updateSelective(" + beanName + " " + objectName + ")   {"
 						+ lineSeparator);
 
-				out.write("\t\treturn " + resJaveDaoLower + ".update" + beanName + "Selective(" + objectName + ");"
+				out.write("\t\treturn " + resJaveDaoLower + ".updateSelective(" + objectName + ");"
 						+ lineSeparator);
 
 				out.write("\t}" + lineSeparator);
@@ -1098,10 +1102,10 @@ public class Main {
 				// }
 
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "List(List<" + beanName + "> list)   {" + lineSeparator);
+				out.write("\tpublic int updateList(List<" + beanName + "> list)   {" + lineSeparator);
 				out.write("\t\tint returnValue = 0;" + lineSeparator);
 				out.write("\t\tfor (" + beanName + " " + objectName + " : list) {" + lineSeparator);
-				out.write("\t\t\treturnValue+=update" + beanName + "(" + objectName + ");" + lineSeparator);
+				out.write("\t\t\treturnValue+=update(" + objectName + ");" + lineSeparator);
 				out.write("\t\t}" + lineSeparator);
 				out.write("\t\treturn returnValue;" + lineSeparator);
 				out.write("\t}" + lineSeparator);
@@ -1109,11 +1113,11 @@ public class Main {
 				out.write(lineSeparator);
 
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic int update" + beanName + "ListSelective(List<" + beanName + "> list)   {"
+				out.write("\tpublic int updateListSelective(List<" + beanName + "> list)   {"
 						+ lineSeparator);
 				out.write("\t\tint returnValue = 0;" + lineSeparator);
 				out.write("\t\tfor (" + beanName + " " + objectName + " : list) {" + lineSeparator);
-				out.write("\t\t\treturnValue+=update" + beanName + "Selective(" + objectName + ");" + lineSeparator);
+				out.write("\t\t\treturnValue+=updateSelective(" + objectName + ");" + lineSeparator);
 				out.write("\t\t}" + lineSeparator);
 				out.write("\t\treturn returnValue;" + lineSeparator);
 				out.write("\t}" + lineSeparator);
@@ -1129,7 +1133,7 @@ public class Main {
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic " + beanName + " query" + beanName + "By" + getMethodByColnames(pksList) + "("
+				out.write("\tpublic " + beanName + " queryBy" + getMethodByColnames(pksList) + "("
 						+ getMethodParamByColnames(pksList) + ")   {" + lineSeparator);
 
 				if (pksList.size() > 1) {
@@ -1137,7 +1141,7 @@ public class Main {
 
 					out.write(getBeanSetString(pksList));
 
-					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".query" + beanName + "By"
+					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".queryBy"
 							+ getMethodByColnames(pksList) + "(" + objectName + ");" + lineSeparator);
 				} else {
 					// 单个字段查询条件
@@ -1151,7 +1155,7 @@ public class Main {
 					// + \"query"+beanName+"ListBy"+colNameAll+"\", "+
 					// mapping.getPropertyName()+"));"+lineSeparator);
 
-					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".query" + beanName + "By"
+					out.write("\t\treturn (" + beanName + ")" + resJaveDaoLower + ".queryBy"
 							+ getMethodByColnames(pksList) + "(" + mapping.getPropertyName() + ");" + lineSeparator);
 				}
 
@@ -1171,9 +1175,9 @@ public class Main {
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic List<" + beanName + "> query" + beanName + "List()   {" + lineSeparator);
+				out.write("\tpublic List<" + beanName + "> queryList()   {" + lineSeparator);
 
-				out.write("\t\treturn " + resJaveDaoLower + ".query" + beanName + "List();" + lineSeparator);
+				out.write("\t\treturn " + resJaveDaoLower + ".queryList();" + lineSeparator);
 
 				out.write("\t}" + lineSeparator);
 				out.write(lineSeparator);
@@ -1188,9 +1192,9 @@ public class Main {
 				// public TbUser queryTbUserByPrimaryKey(Integer id) throws
 				// CoreException;
 				out.write("\t@Override" + lineSeparator);
-				out.write("\tpublic  Long query" + beanName + "Count()   {" + lineSeparator);
+				out.write("\tpublic  Long count()   {" + lineSeparator);
 
-				out.write("\t\treturn " + resJaveDaoLower + ".query" + beanName + "Count();" + lineSeparator);
+				out.write("\t\treturn " + resJaveDaoLower + ".count();" + lineSeparator);
 
 				out.write("\t}" + lineSeparator);
 				out.write(lineSeparator);
@@ -1223,7 +1227,7 @@ public class Main {
 
 					// System.out.println(StringUtil.toJson(colList));
 
-					String str = "\tpublic List<" + beanName + "> query" + beanName + "ListBy";
+					String str = "\tpublic List<" + beanName + "> queryListBy";
 
 					String colNameAll = getMethodByColnames(colList);
 
@@ -1248,7 +1252,7 @@ public class Main {
 						// (List<"+beanName+">)(getSqlMap().queryForList(NAMESPACES
 						// + \"query"+beanName+"ListBy"+colNameAll+"\", "+
 						// objectName+"));"+lineSeparator);
-						out.write("\t\treturn " + resJaveDaoLower + ".query" + beanName + "ListBy" + colNameAll + "\", "
+						out.write("\t\treturn " + resJaveDaoLower + ".queryListBy" + colNameAll + "\", "
 								+ objectName + ");" + lineSeparator);
 					} else {
 						// 单个字段查询条件
@@ -1262,7 +1266,7 @@ public class Main {
 						// + \"query"+beanName+"ListBy"+colNameAll+"\", "+
 						// mapping.getPropertyName()+"));"+lineSeparator);
 
-						out.write("\t\treturn " + resJaveDaoLower + ".query" + beanName + "ListBy" + colNameAll + "\", "
+						out.write("\t\treturn " + resJaveDaoLower + ".queryListBy" + colNameAll + "\", "
 								+ mapping.getPropertyName() + ");" + lineSeparator);
 					}
 
@@ -1463,7 +1467,7 @@ public class Main {
 		try {
 			out = new BufferedWriter(
 					new OutputStreamWriter(
-							new FileOutputStream(outputPath + File.separator + beanName + "-Mapping.xml"), charSet),
+							new FileOutputStream(outputPath + File.separator + beanName + "Mapper.xml"), charSet),
 					8 * 1024);
 
 			// <?xml version="1.0" encoding="UTF-8" ?>
@@ -1485,7 +1489,7 @@ public class Main {
 			// String javaBeanFullString = packageStr + "." +
 			// beanName.toLowerCase() + "." + beanName;
 			String javaBeanFullString = packageStr + "." + packageStrPojoEx + "." + beanName;
-			String javaDaoFullString = packageStr + "." + packageStrDaoEx + "." + beanName + "Dao";
+			String javaDaoFullString = packageStr + "." + packageStrDaoEx + "." + beanName + "Mapper";
 			// <mapper namespace="TbUser">
 			out.write("<mapper namespace=\"" + javaDaoFullString + "\">" + lineSeparator);
 			out.write(lineSeparator);
@@ -1516,7 +1520,7 @@ public class Main {
 				// insertTbUser
 				// <insert id="insertTbUser"
 				// parameterType="com.spdbccc.service.iface.dao.tbuser.TbUser">
-				out.write("\t<insert id=\"insert" + beanName + "\" parameterType=\"" + javaBeanFullString + "\">"
+				out.write("\t<insert id=\"insert\" parameterType=\"" + javaBeanFullString + "\">"
 						+ lineSeparator);
 				//
 				// insert into TB_USER (ID, USERNAME)
@@ -1554,7 +1558,7 @@ public class Main {
 				out.write(lineSeparator);
 
 				// insertTbUser=============================================
-				out.write("\t<insert id=\"insert" + beanName + "Selective\" parameterType=\"" + javaBeanFullString
+				out.write("\t<insert id=\"insertSelective\" parameterType=\"" + javaBeanFullString
 						+ "\">" + lineSeparator);
 
 				out.write("\t\tinsert into " + getFullTabName() + lineSeparator);
@@ -1615,7 +1619,7 @@ public class Main {
 					// where ID = #{id,jdbcType=DECIMAL}
 					// </delete>
 
-					out.write("\t<delete id=\"delete" + beanName + "By" + getMethodByColnames(pksList)
+					out.write("\t<delete id=\"deleteBy" + getMethodByColnames(pksList)
 							+ "\" parameterType=\"" + javaBeanFullString + "\">" + lineSeparator);
 
 					out.write("\t\tdelete from " + getFullTabName() + lineSeparator);
@@ -1627,7 +1631,7 @@ public class Main {
 
 				} else {
 
-					out.write("\t<delete id=\"delete" + beanName + "By" + getMethodByColnames(pksList)
+					out.write("\t<delete id=\"deleteBy" + getMethodByColnames(pksList)
 							+ "\" parameterType=\"" + getJavaFullType(pksList) + "\">" + lineSeparator);
 
 					out.write("\t\tdelete from " + getFullTabName() + lineSeparator);
@@ -1644,7 +1648,7 @@ public class Main {
 					// * 删 delete
 					// */
 
-					out.write("\t<delete id=\"delete" + beanName + "By"
+					out.write("\t<delete id=\"deleteBy"
 							+ StringUtil.getMethodPropertyName(otherMapping.getPropertyName()) + "\" parameterType=\""
 							+ JdbcUtil.convertJdbcType2JavaTypeFull(otherMapping.getColumnType()) + "\">"
 							+ lineSeparator);
@@ -1668,7 +1672,7 @@ public class Main {
 				// insertTbUser
 				// <insert id="insertTbUser"
 				// parameterType="com.spdbccc.service.iface.dao.tbuser.TbUser">
-				out.write("\t<update id=\"update" + beanName + "\" parameterType=\"" + javaBeanFullString + "\">"
+				out.write("\t<update id=\"update\" parameterType=\"" + javaBeanFullString + "\">"
 						+ lineSeparator);
 				//
 				// insert into TB_USER (ID, USERNAME)
@@ -1719,7 +1723,7 @@ public class Main {
 				//
 				// </update>
 
-				out.write("\t<update id=\"update" + beanName + "Selective\" parameterType=\"" + javaBeanFullString
+				out.write("\t<update id=\"updateSelective\" parameterType=\"" + javaBeanFullString
 						+ "\">" + lineSeparator);
 				//
 				// insert into TB_USER (ID, USERNAME)
@@ -1763,7 +1767,7 @@ public class Main {
 				// </select>
 				if (pksList.size() > 1) {
 
-					out.write("\t<select id=\"query" + beanName + "By" + getMethodByColnames(pksList)
+					out.write("\t<select id=\"queryBy" + getMethodByColnames(pksList)
 							+ "\" parameterType=\"" + javaBeanFullString + "\" resultMap=\"" + resultMapId + "\">"
 							+ lineSeparator);
 
@@ -1776,7 +1780,7 @@ public class Main {
 					out.write(lineSeparator);
 
 				} else {
-					out.write("\t<select id=\"query" + beanName + "By" + getMethodByColnames(pksList)
+					out.write("\t<select id=\"queryBy" + getMethodByColnames(pksList)
 							+ "\" parameterType=\"" + getJavaFullType(pksList) + "\" resultMap=\"" + resultMapId + "\">"
 							+ lineSeparator);
 
@@ -1793,7 +1797,7 @@ public class Main {
 
 			if (needSelectAll) {
 
-				out.write("\t<select id=\"query" + beanName + "List\" parameterType=\"java.lang.String\" resultMap=\""
+				out.write("\t<select id=\"queryList\" parameterType=\"java.lang.String\" resultMap=\""
 						+ resultMapId + "\">" + lineSeparator);
 
 				out.write("\t\t" + sql + lineSeparator);
@@ -1805,7 +1809,7 @@ public class Main {
 			}
 			if (needSelectCount) {
 
-				out.write("\t<select id=\"query" + beanName + "Count\" resultType=\"java.lang.Long\" " + ">"
+				out.write("\t<select id=\"count\" resultType=\"java.lang.Long\" " + ">"
 						+ lineSeparator);
 
 				out.write("\t\t" + sqlCount + lineSeparator);
@@ -1841,7 +1845,7 @@ public class Main {
 					// System.out.println(StringUtil.toJson(colList));
 					String colNameAll = getMethodByColnames(colList);
 
-					out.write("\t<select id=\"query" + beanName + "ListBy" + colNameAll + "\" parameterType=\""
+					out.write("\t<select id=\"queryListBy" + colNameAll + "\" parameterType=\""
 							+ getJavaFullType(colList) + "\" resultMap=\"" + resultMapId + "\">" + lineSeparator);
 
 					out.write("\t\t" + sql + lineSeparator);
